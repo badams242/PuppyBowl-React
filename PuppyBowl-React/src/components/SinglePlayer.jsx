@@ -28,21 +28,29 @@ const SinglePlayer = () => {
 
   const handleDeletePlayer = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this player?');
-    if (confirmdeletion) {
-    try {
-      await deletePlayer(`https://fsa-puppy-bowl.herokuapp.com/api/2309-ftb-et-web-pt/players/${playerId}`);
-      navigate('/all-players'); // Redirect to AllPlayers after deletion
-    } catch (error) {
-      console.error('Error deleting player:', error);
+    if (confirmDelete) {
+      try {
+        await deletePlayer(`https://fsa-puppy-bowl.herokuapp.com/api/2309-ftb-et-web-pt/players/${playerId}`);
+        navigate('/all-players');
+      } catch (error) {
+        console.error('Error deleting player:', error);
+      }
     }
   };
 
   return (
-    <div className= "player-details">
-      <h2>{player.name}</h2>
-      {/* Render other player details */}
-      <button className="back" onClick={handleNavigateBack}>Go Back to All Players</button>
-      <button className="delete" onClick={handleDeletePlayer}>Delete Player</button>
+    <div className="player-details">
+      {player.name ? (
+        <>
+          <h2>{player.name}</h2>
+          <img src={player.image} alt={player.name} />
+          {/* Render other player details */}
+          <button className="back" onClick={handleNavigateBack}>Go Back to All Players</button>
+          <button className="delete" onClick={handleDeletePlayer}>Delete Player</button>
+        </>
+      ) : (
+        <p>Loading player details...</p>
+      )}
     </div>
   );
 };
