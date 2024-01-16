@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchSinglePlayer, deletePlayer } from './api'; // Correct the import statement
+import './App.css';
 
 const SinglePlayer = () => {
   const [player, setPlayer] = useState({});
@@ -26,8 +27,9 @@ const SinglePlayer = () => {
   };
 
   const handleDeletePlayer = async () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this player?');
+    if (confirmdeletion) {
     try {
-      // Use template literals for dynamic URLs
       await deletePlayer(`https://fsa-puppy-bowl.herokuapp.com/api/2309-ftb-et-web-pt/players/${playerId}`);
       navigate('/all-players'); // Redirect to AllPlayers after deletion
     } catch (error) {
@@ -36,11 +38,11 @@ const SinglePlayer = () => {
   };
 
   return (
-    <div>
+    <div className= "player-details">
       <h2>{player.name}</h2>
       {/* Render other player details */}
-      <button onClick={handleNavigateBack}>Go Back to All Players</button>
-      <button onClick={handleDeletePlayer}>Delete Player</button>
+      <button className="back" onClick={handleNavigateBack}>Go Back to All Players</button>
+      <button className="delete" onClick={handleDeletePlayer}>Delete Player</button>
     </div>
   );
 };
