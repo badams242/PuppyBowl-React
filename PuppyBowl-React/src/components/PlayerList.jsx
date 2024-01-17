@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchPlayers } from '../API';
 
-const AllPlayers = () => {
+const PlayerList = () => {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const AllPlayers = () => {
 
   return (
     <div>
-      <h1>All Players</h1>
+      <h1>Player List</h1>
       <ul>
         {players.map((player) => (
           <li key={player.id}>
@@ -37,4 +37,4 @@ const AllPlayers = () => {
   );
 };
 
-export default AllPlayers;
+export default PlayerList;

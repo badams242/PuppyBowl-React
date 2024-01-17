@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchPlayerById } from '../API';
 
-const SinglePlayer = () => {
+const PlayerDetails = () => {
   const { id } = useParams();
-  const [player, setPlayer] = useState(null);
+  const [playerDetails, setPlayerDetails] = useState(null);
 
   useEffect(() => {
-    // Fetch details for the specific player when the component mounts
+    // Fetch the details of the specific player when the component mounts
     const fetchData = async () => {
       try {
         const data = await fetchPlayerById(id);
-        setPlayer(data);
+        setPlayerDetails(data);
       } catch (error) {
         // Handle error, e.g., display an error message to the user
         console.error(`Error fetching details for player with ID ${id}:`, error.message);
@@ -21,21 +21,19 @@ const SinglePlayer = () => {
     fetchData();
   }, [id]);
 
-  if (!player) {
+  if (!playerDetails) {
     // Optional: You can add a loading state here
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h1>{player.name}</h1>
-      <p>TeamId: {player.teamId}</p>
-      <p>Status: {player.status}</p>
-        <p>Breed: {player.breed}</p>
+      <h1>Player Details</h1>
+      <p>Name: {playerDetails.name}</p>
+      <p>TeamId: {playerDetails.teamId}</p>
+      <p>Status: {playerDetails.status}</p>
+        <p>Breed: {playerDetails.breed}</p>
       {/* Display other player details as needed */}
-      <Link to="/">Back to All Players</Link>
     </div>
   );
 };
-
-export default SinglePlayer;
