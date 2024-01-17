@@ -43,15 +43,19 @@ const NewPlayerForm = () => {
         </label>
         <br />
         <label>
-          Team:
-          <input type="text" name="team" value={newPlayerData.team} onChange={handleInputChange} />
+          TeamId:
+          <input type="text" name="teamId" value={newPlayerData.teamId} onChange={handleInputChange} />
         </label>
         <br />
         <label>
-          Owner:
-          <input type="text" name="owner" value={newPlayerData.owner} onChange={handleInputChange} />
+          Status:
+          <input type="text" name="status" value={newPlayerData.status} onChange={handleInputChange} />
         </label>
         <br />
+        <label>
+            Breed:
+            <input type="text" name="breed" value={newPlayerData.breed} onChange={handleInputChange} />
+            </label>
         {/* Add other input fields as needed */}
         <br />
         <button type="submit">Create Player</button>
