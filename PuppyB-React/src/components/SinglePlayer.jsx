@@ -1,41 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { fetchPlayerById } from '../API';
+import React from 'react';
 
-const SinglePlayer = () => {
-  const { id } = useParams();
-  const [player, setPlayer] = useState(null);
-
-  useEffect(() => {
-    // Fetch details for the specific player when the component mounts
-    const fetchData = async () => {
-      try {
-        const data = await fetchPlayerById(id);
-        setPlayer(data);
-      } catch (error) {
-        // Handle error, e.g., display an error message to the user
-        console.error(`Error fetching details for player with ID ${id}:`, error.message);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (!player) {
-    // Optional: You can add a loading state here
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <h1>{player.name}</h1>
-      <p>TeamId: {player.teamId}</p>
-      <p>Status: {player.status}</p>
-        <p>Breed: {player.breed}</p>
-      {/* Display other player details as needed */}
-      <Link to="/">Back to All Players</Link>
-    </div>
-  );
-};
+const SinglePlayer = ({ players, setToggle }) => {
+    try {
+        return (
+            <>
+                <div id='single-player-view'>
+                    {players.map((player, index) => (
+                        <div className='single-player-card' key={player.name + index}>
+                            <div className="header-info">
+                                <p className='pup-title'>{player.name}</p>
+                                <p className='pup-number'>{player.id}</p>
+                            </div>
+                            <p>{player.status}</p>
+                            <p>{player.breed}</p>
+                            <img src={player.imageUrl} alt="" />
+                            <button id="see-all" onClick={() => setToggle(false)}>
+                                Back to all players
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </>
+        );
+    } catch (error) {
+        console.log('single Player error');
+    }
+}
 
 export default SinglePlayer;

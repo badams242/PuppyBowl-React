@@ -1,22 +1,51 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AllPlayers from './components/AllPlayers';
-import PlayerDetails from './components/PlayerDetails';
-import NewPlayerForm from './components/NewPlayerForm';
+import React, { useState, useEffect } from 'react';
+import { Players, PlayerForm, PlayerCard } from './index';
+import { fetchAllPlayers } from '../ajaxHelpers';
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={AllPlayers} />
-          <Route path="/players/:id" component={PlayerDetails} />
-          <Route path="/create" component={NewPlayerForm} />
-          {/* Add additional routes as needed */}
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+const App = () => {
+    const [players, setPlayers] = useState([]);
+    const [toggle, setToggle] = useState(false);
+
+    // getAllPlayers function to be used in useEffect because it needs async/await
+    const getAllPlayers = async () => {
+        try {
+            const players = await fetchAllPlayers();
+            setPlayers(players);
+        } catch (error) {
+            console.error('Error fetching players:', error.message);
+        }
+    };
+
+    // useEffect to get initial players
+    useEffect(() => {
+        getAllPlayers();
+    }, []);
+
+    // Function to handle "see-details-bttn" click
+    const handleSeeDetails = () => {
+        setToggle(true);
+    };
+
+    // Function to handle "go-back-bttn" click
+    const handleGoBack = () => {
+        setToggle(false);
+    };
+
+    // useEffect to listen for toggle changes
+    useEffect(() => {
+        // Add logic here based on toggle value
+    }, [toggle]);
+
+    return (
+        <>
+            <PlayerForm />
+            {toggle ? (
+                <PlayerCard players={players} toggle={toggle} onGoBack={handleGoBack} />
+            ) : (
+                <Players players={players} toggle={toggle} onSeeDetails={handleSeeDetails} />
+            )}
+        </>
+    );
+};
 
 export default App;
