@@ -1,5 +1,0 @@
-export {default as Players} from './Players'
-export {default as PlayerForm} from './PlayerForm'
-export {default as PlayerCard} from './PlayerCard'
-export {default as SinglePlayer} from './SinglePlayer'
-export {default as App} from './App'
